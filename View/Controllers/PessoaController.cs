@@ -40,5 +40,28 @@ namespace View.Controllers
             var resultado = new { id = id };
             return Json(resultado);
         }
+
+        [HttpGet]
+        public JsonResult Apagar(int id)
+        {
+            var apagou = repository.Apagar(id);
+            var resultado = new { status = apagou };
+            return Json(resultado, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public JsonResult Update(Pessoa pessoa)
+        {
+            var alterou = repository.Alterar(pessoa);
+            var resultado = new { status = alterou };
+            return Json(resultado); 
+        }
+
+        [HttpGet, Route("pessoa/obterpeloid")]
+        public JsonResult ObterPeloId(int id)
+        {
+            return Json(repository.ObterPeloId(id), JsonRequestBehavior.AllowGet);
+        }
     }
+
 }
