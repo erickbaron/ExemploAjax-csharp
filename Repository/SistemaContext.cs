@@ -17,5 +17,7 @@ namespace Repository
         }
 
         public DbSet<Pessoa> Pessoas { get; set; }
+        public DbSet<Venda> Vendas { get; set; }
+        public DbSet<Produto> Produtos { get; set;   }
     }
 }

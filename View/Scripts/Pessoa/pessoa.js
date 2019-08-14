@@ -22,6 +22,35 @@
         $nome = $('#pessoa-campo-nome').val();
         $cpf = $('#pessoa-campo-cpf').val();
 
+        if ($idAlterar == -1) {
+            inserir($nome, $cpf);
+        } else {
+            alterar($nome, $cpf)
+        }
+    })
+
+    function alterar($nome, $cpf) {
+        $.ajax({
+            url: "http://localhost:51670/pessoa/update",
+            method: "post",
+            data: {
+                id : $idAlterar,
+                nome: $nome,
+                cpf: $cpf
+            },
+            success: function (data) {
+                $("#modal-categoria").modal("hide"); // hide ocultar, show mostrar
+                $idAlterar = -1;
+                $tabelaPessoa.ajax.reload();
+
+            },
+            error: function (err) {
+                alert("Não dá")
+            }
+        })
+    }
+
+    function inserir($nome, $cpf) {
         $.ajax({
             url: 'http://localhost:51670/Pessoa/inserir',
             method: 'post',
@@ -36,9 +65,9 @@
             error: function (err) {
                 alert('Não conegue birl')
             }
-            
-        })
-    })
+
+        });
+    }
 
     $(".table").on("click", ".botao-apagar", function () {
         $idApagar = $(this).data("id");
@@ -66,7 +95,7 @@
 
                 $("#modal-categoria").modal("show");
             },
-            error: function (err) { 
+            error: function (err) {
                 alert('Não foi possivel carregar')
             }
         })

@@ -31,7 +31,7 @@ namespace View.Controllers
             var resultado = new { data = pessoas };
             return Json(resultado, JsonRequestBehavior.AllowGet);
         }
-        
+
         [HttpPost]
         public JsonResult Inserir(Pessoa pessoa)
         {
@@ -54,13 +54,35 @@ namespace View.Controllers
         {
             var alterou = repository.Alterar(pessoa);
             var resultado = new { status = alterou };
-            return Json(resultado); 
+            return Json(resultado);
         }
 
         [HttpGet, Route("pessoa/obterpeloid")]
         public JsonResult ObterPeloId(int id)
         {
             return Json(repository.ObterPeloId(id), JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpGet, Route("Pessoa/obtertodosselect2")]
+        public JsonResult ObterTodosSelect2(string term)
+        {
+            var pessoas = repository.ObterTodos();
+
+            List<object> pessoasSelect2 = new List<object>();
+            foreach (Pessoa pessoa in pessoas)
+                {
+                pessoasSelect2.Add(new
+                {
+                    id = pessoa.Id,
+                    text = pessoa.Nome
+                });
+            }
+
+            var resultado = new
+            {
+                results = pessoasSelect2
+            };
+            return Json(resultado, JsonRequestBehavior.AllowGet);
         }
     }
 
